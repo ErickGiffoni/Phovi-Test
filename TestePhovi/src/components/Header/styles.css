@@ -1,0 +1,24 @@
+.App-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 24px;
+  color: #000;
+  margin: 20px 0;
+  width: 90%;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.App-header .button {
+  width: auto;
+  padding: 5px 10px;
+}
+
+.logo-container img {
+  width: 50px;
+  margin-right: 10px;
+}
