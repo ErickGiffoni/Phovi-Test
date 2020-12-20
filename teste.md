@@ -12,10 +12,10 @@ aplicação com firebase, para isso você precisará criar uma aplicação no fi
 
 ## Tasks
 
-- [ ] 1) Assim que a aplicação estiver conectada, a versão web deve funcionar normalmente, para poder acessar o <br>
+- [ ok ] 1) Assim que a aplicação estiver conectada, a versão web deve funcionar normalmente, para poder acessar o <br>
 Trivia Maker vai ser necessário criar um usuário e senha no firebase auth, para poder fazer login
 
-- [ ] 2) Para carregar os trivias, tem que adicionar um trivia no Firestore, apesar de não ter sido passado a <br>
+- [ ok ] 2) Para carregar os trivias, tem que adicionar um trivia no Firestore, apesar de não ter sido passado a <br>
 estrutura da database, é só fazer "engenharia reversa" das requisições
 
 - [ ] 3) Quando um trivia é adicionado, ele acaba indo com uma url de imagem de sites de terceiros,assim, a imagem <br>
@@ -68,3 +68,27 @@ do Firebase com alguns trechos de código.~~
 
 - Adicionei ao Firebase Auth a opção de log in via email + senha, e criei o primeiro usuário : ```teste@phovi.com```.<br>
 **Task 1 -> ok.**
+
+> 20/12/2020
+
+- Executei a aplicação e tentei criar um trivia sobre o Chaves, parecido com o exemplo que me foi passado. Percebi que,<br>
+ao clicar em ```Send to Firebase```, ocorre um erro de permissão negada. Isso é provavelmente porque ainda não adicionei<br>
+regras de segurança para permitir o usuário autenticado fazer um "set" na nossa database.
+
+    - A partir da constatação acima entrei na Firestore/rules e comecei a criar e testar regras. Criei uma regra inicial <br>
+    para permitir acesso de read e de write para todo usuário que já fez log in.
+
+    - ~~Percebi que a funcionalidade ```Load Trivia``` não estava trazendo para o front-end as trivias de teste que eu havia<br>
+    adicionado manualmente na Firestore. Vi que era um bug simples no código em ```/src/components/ModalLoadTrivia/index.tsx```<br>
+    na linha 24 na chamada da setOpenModal, que deveria ter recebido o valor "true" como parâmetro.~~
+
+    OBS.: na verdade não foi bem isso o que ocorreu, por isso desconsiderei essa parte.
+
+    - ~~Mesmo assim, ao selecionar uma trivia, outro erro era gerado e a aplicação exibia tele de erro. No momento <br>
+    estou trabalhando para consertar isso.~~
+
+    - **Task 2 -> ok**
+
+- Adicionei o pacote firebase/databse para que fosse possível conectar o Trivia Maker com o Realtime Database do Firebase.
+
+    - TODO
