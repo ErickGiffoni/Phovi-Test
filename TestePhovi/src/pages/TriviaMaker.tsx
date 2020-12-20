@@ -53,12 +53,13 @@ function TriviaMaker() {
       let falseAnswers = 0;
 
       triviaQuestions.map((trivia) => {
-        if (trivia.correct_answer === "true") {
-          trueAnswers += 1;
-        } else if (trivia.correct_answer === "false") {
-          falseAnswers += 1;
-        }
-      });
+          if (trivia.correct_answer === "true") {
+            trueAnswers += 1;
+          } else if (trivia.correct_answer === "false") {
+            falseAnswers += 1;
+          }
+          return trivia
+        });
 
       const total = trueAnswers + falseAnswers;
 

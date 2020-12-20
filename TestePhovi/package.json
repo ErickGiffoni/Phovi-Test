@@ -15,17 +15,20 @@
     "@types/react-dom": "^16.9.0",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
+    "fast-crc32c": "^2.0.0",
     "firebase": "^7.24.0",
+    "firebase-admin": "^9.4.2",
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.11.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "^4.0.1",
     "react-table": "^7.5.0",
     "styled-components": "^5.2.1",
     "typescript": "~3.7.2",
-    "victory": "^35.0.8"
+    "victory": "^35.0.8",
+    "worker-threads": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

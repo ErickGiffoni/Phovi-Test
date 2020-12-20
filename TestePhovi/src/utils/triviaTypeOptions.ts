@@ -1,4 +1,4 @@
-export default [
+const triviaTypeOptions = [
   {
     value: "singleChoice",
     label: "True/False",
@@ -8,3 +8,5 @@ export default [
     label: "Multiple Choice",
   },
 ];
+
+export default triviaTypeOptions;

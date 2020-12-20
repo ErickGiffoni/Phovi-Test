@@ -79,7 +79,7 @@ const Form: React.FC<FormProps> = ({
         <div className="questionContainer" key={index.toString()}>
           {triviaType === "singleChoice" && (
             <div className="image-form">
-              <img src={question.image_url} alt="image question" />
+              <img src={question.image_url} alt="question" />
             </div>
           )}
           <div
