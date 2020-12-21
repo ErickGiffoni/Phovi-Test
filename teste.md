@@ -23,11 +23,11 @@ pode cair, ficar fora do ar,ou ter acesso bloqueado. Para evitar isso, uma funci
 imagem que foi armazenada no Firestore, baixar, comprimir e enviar para o Storage do firebase, e depois substituir <br>
 o link que antes era de um site de terceiro, pelo link do Storage, isso pode ser realizado pelo Functions do firebase
 
-- [ ] 4) Como é importante garantir que os trivias só sejam acessados/alterados por quem está autenticado, é importante <br>
+- [ ~ok ] 4) Como é importante garantir que os trivias só sejam acessados/alterados por quem está autenticado, é importante <br>
 criar regras de segurança no firestore e storage para garantir isso, crie as regras que achar necessário, podendo criar<br>
 regras individuais de cada campo
 
-- [ ] 5) É interessante armazenar qual foi o último usuário que entrou nessa aplicação web, assim, a cada login na <br>
+- [ ok ] 5) É interessante armazenar qual foi o último usuário que entrou nessa aplicação web, assim, a cada login na <br>
 aplicação web, adicione em uma tabela no Real Time Database do firebase (/adminAccess), o uid do usuário que acessou <br>
 e o timestamp, também crie regras dessa tabela
 
@@ -71,6 +71,8 @@ do Firebase com alguns trechos de código.~~
 
 > 20/12/2020
 
+- **Task 4 -> ok, parcialmente, pois é possível criar regras mais elaboradas**
+
 - Executei a aplicação e tentei criar um trivia sobre o Chaves, parecido com o exemplo que me foi passado. Percebi que,<br>
 ao clicar em ```Send to Firebase```, ocorre um erro de permissão negada. Isso é provavelmente porque ainda não adicionei<br>
 regras de segurança para permitir o usuário autenticado fazer um "set" na nossa database.
@@ -91,4 +93,11 @@ regras de segurança para permitir o usuário autenticado fazer um "set" na noss
 
 - Adicionei o pacote firebase/databse para que fosse possível conectar o Trivia Maker com o Realtime Database do Firebase.
 
-    - TODO
+    - Estou estudando como adicionar o uid e o timestamp para a base de dados quando houver log in.
+
+    > 21/12/2020
+
+    - Mudei a regra de segurança no Realtime DB para permitir read e write somente ao usuário que fez log in.
+
+    - Consegui adicionar o uid e o timestamp (este usando ```Date.now()```) ao Realtime para cada log in na aplicação.<br>
+    **Task 5 -> ok**

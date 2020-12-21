@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
-import { auth } from "../firebase";
+import { auth, database } from "../firebase";
 
 interface AuthState {
   user: object;
@@ -17,6 +17,9 @@ interface AuthContextData {
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+
+const rootRef = database.ref();
+const adminRef = rootRef.child("adminAccess");
 
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
@@ -37,8 +40,13 @@ const AuthProvider: React.FC = ({ children }) => {
       .then(async (userData) => {
         localStorage.setItem("@Phovi:user", JSON.stringify(userData));
         setData({ user });
+        adminRef.push().update({
+          "uid" : userData.user?.uid,
+          "timestamp" : Date.now()
+        });
       })
       .catch((error) => alert(error));
+      
   }, []);
 
   const signOut = useCallback(async () => {
