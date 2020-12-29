@@ -18,7 +18,7 @@ Trivia Maker vai ser necessário criar um usuário e senha no firebase auth, par
 - [ ok ] 2) Para carregar os trivias, tem que adicionar um trivia no Firestore, apesar de não ter sido passado a <br>
 estrutura da database, é só fazer "engenharia reversa" das requisições
 
-- [ ] 3) Quando um trivia é adicionado, ele acaba indo com uma url de imagem de sites de terceiros,assim, a imagem <br>
+- [ ~ok ] 3) Quando um trivia é adicionado, ele acaba indo com uma url de imagem de sites de terceiros,assim, a imagem <br>
 pode cair, ficar fora do ar,ou ter acesso bloqueado. Para evitar isso, uma funcionalidade importante é pegar a <br>
 imagem que foi armazenada no Firestore, baixar, comprimir e enviar para o Storage do firebase, e depois substituir <br>
 o link que antes era de um site de terceiro, pelo link do Storage, isso pode ser realizado pelo Functions do firebase
@@ -101,3 +101,39 @@ regras de segurança para permitir o usuário autenticado fazer um "set" na noss
 
     - Consegui adicionar o uid e o timestamp (este usando ```Date.now()```) ao Realtime para cada log in na aplicação.<br>
     **Task 5 -> ok**
+
+- Criei uma pasta chamada ```backend-TriviaMaker``` para servir de backend usando Firebase Functions e fiz os passos<br>
+iniciais conforme o [video de explicação](https://www.youtube.com/watch?v=DYfP-UIKxH0).
+
+    - As dependências necessárias que nosso front-end usa foram instaladas (storage, database etc) e os arquivos<br>
+    com as regras que eu havia criado foram criados. Agora sim temos um back-end pegando robustez.
+
+> 22/12/2020 e 23/12/2020
+
+- Comecei a escrever as funções para atualizar as imagens das Trivias e passei um bom tempo estudando uma estratégia viável<br>
+para realizar essa tarefa
+
+> 24/12/2020 - 26/12/2020
+
+- Depois de várias tentativas sem sucesso, pelo visto terei que enviar a imagem para o Storage pelo front-end mesmo.
+
+- Vou tentar seguir o seguinte algoritmo :
+
+    1. No front : baixar a imagem a partir da url fornecida pelo usuário usando o pacote ```Axios```. Após o download,<br>
+    mando o arraybuffer para o Storage e salvo com o tipo ```image/jpg```;
+
+    2. No back : Storage trigger -> ao ser adicionada uma nova imagem, um gatilho é acionado para uma cloud function,<br>
+    a qual pega o link dessa imagem no Storage, vai na Firestore e atualiza o link da imagem relacionada àquela Trivia.
+
+    OBS.: por enquanto só fiz para a photoUrl, que é a imagem da Trívia. As imagens das perguntas, as image_url, ainda não estão na solução, até pq não sei se é necessário.
+
+    - Alguns problemas encontrados :
+
+        1. O link da Storage para a imagem é de acesso restrito, então uma opção é tentar tornar ele público para que<br> 
+        outra aplicação possa usá-lo;
+
+        2. O Axios baixa a imagem no frontend, porém o CORS do navegador passa a negar esse download porque as <br>
+        URLs das imagens são de sites terceiros. Passei muito tempo tentando resolver isso, porém ainda não consegui.<br>
+        Eu queria fazer o app Trívia Maker usar o node CORS no client-side, aí acho que resolveria o problema.
+
+    - Com isso, **Task 3 -> ok**, parcialmente.
