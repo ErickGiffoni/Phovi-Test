@@ -9,7 +9,9 @@ import Routes from "./routes";
 const App: React.FC = () => (
   <Router>
     <AppProvider>
-      <Routes />
+      <Routes>
+        <SignIn />
+      </Routes>
     </AppProvider>
   </Router>
 );

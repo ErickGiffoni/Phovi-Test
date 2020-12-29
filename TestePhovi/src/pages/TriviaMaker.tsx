@@ -2,14 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import "../assets/styles/TriviaMaker.css";
 import "../assets/styles/global.css";
 
-import { firestore } from "../firebase";
+import { firestore, storage } from "../firebase";
 import triviaTypeOptions from "../utils/triviaTypeOptions";
+
+//import { downloadImage } from "../utils/downloadImage"
 
 import Header from "../components/Header/index";
 import ModalLoadTrivia from "../components/ModalLoadTrivia/index";
 import Form from "../components/Form/index";
 import GenerateTrivia from "../components/GenerateTrivia/index";
 import ButtonGroup from "../components/ButtonGroup/index";
+
+const axios = require("axios");
 
 interface TriviaQuestions {
   question: string;
@@ -53,12 +57,13 @@ function TriviaMaker() {
       let falseAnswers = 0;
 
       triviaQuestions.map((trivia) => {
-        if (trivia.correct_answer === "true") {
-          trueAnswers += 1;
-        } else if (trivia.correct_answer === "false") {
-          falseAnswers += 1;
-        }
-      });
+          if (trivia.correct_answer === "true") {
+            trueAnswers += 1;
+          } else if (trivia.correct_answer === "false") {
+            falseAnswers += 1;
+          }
+          return trivia
+        });
 
       const total = trueAnswers + falseAnswers;
 
@@ -195,8 +200,12 @@ function TriviaMaker() {
       .collection(triviaType)
       .doc(triviaTitle)
       .set(data)
+      .then( () => {
+        alert("Trivia Added !");
+      })
       .catch((err: any) => {
         console.error(err);
+        alert("Error while adding Trivia...\nCheck security rules");
       });
 
     await firestore
@@ -213,6 +222,33 @@ function TriviaMaker() {
       .catch((err: any) => {
         console.error(err);
       });
+
+    let photoUrlBuffer;
+
+    await axios({
+      method: "get",
+      url: data.photoUrl,
+      responseType: "arraybuffer",
+      headers: { "Access-Control-Allow-Origin": "http://localhost:3000" } //erro com o CORS nao permite o download...
+    })
+    .then( (response) => {
+      photoUrlBuffer = response.data;
+    })
+    .catch( (err) => {
+      console.log("Error while downloading image...");
+      console.error(err);
+      alert("Error while downloading image...");
+    })
+
+    await storage
+      .ref("games/trivias/photoUrl/" + data.title + ".jpg")
+      .put(photoUrlBuffer, {
+        contentType: 'image/jpg',
+      })
+      .catch( (error) => {
+        console.error(error);
+        alert("Storage: image was not added");
+      })
   };
 
   return (
